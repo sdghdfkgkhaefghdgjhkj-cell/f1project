@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админка новостей</title>
+    <style>
+        .admin-panel {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .upload-area {
+            border: 2px dashed #ccc;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .preview {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-panel">
+        <h1>📝 Панель управления новостями</h1>
+        
+        <!-- Форма загрузки Word -->
+        <div class="upload-area" id="uploadArea">
+            <h3>📎 Загрузите Word файл с новостью</h3>
+            <p>Перетащите .docx файл сюда или нажмите для выбора</p>
+            <input type="file" id="wordFile" accept=".docx" style="display: none;">
+            <button onclick="document.getElementById('wordFile').click()">
+                Выбрать файл
+            </button>
+        </div>
+
+        <!-- Превью контента -->
+        <div class="preview" id="preview" style="display: none;">
+            <h3>Предпросмотр:</h3>
+            <div id="contentPreview"></div>
+            <button onclick="publishNews()" style="margin-top: 20px;">
+                🚀 Опубликовать новость
+            </button>
+        </div>
+
+        <!-- Список существующих новостей -->
+        <div class="existing-news">
+            <h3>Существующие новости:</h3>
+            <div id="newsList"></div>
+        </div>
+    </div>
+
+    <!-- Библиотеки для работы с Word -->
+    <script src="https://unpkg.com/mammoth@1.4.17/mammoth.browser.min.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
