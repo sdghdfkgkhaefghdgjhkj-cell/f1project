@@ -1,16 +1,33 @@
 /* Основные стили */
+:root {
+    --primary-bg: linear-gradient(to top right, #000000, #001d50);
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-white: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.9);
+    --accent-gradient: linear-gradient(135deg, #4a90e2, #2a5298);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    background: linear-gradient(to top right, #000000, #001d50);
+    background: var(--primary-bg);
     position: relative;
     min-height: 100vh;
     font-family: Arial, sans-serif;
     max-width: 1600px;
     margin: 0 auto;
-    padding: 20px;
-    color: white;
+    padding: 15px;
+    color: var(--text-white);
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
+    font-size: 16px;
+    line-height: 1.5;
 }
 
 /* Анимированный фон с точками */
@@ -22,482 +39,331 @@ body::before {
     width: 200%;
     height: 200%;
     background: 
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.4) 2px, transparent 2px),
-        radial-gradient(circle at 20% 80%, rgba(255,255,255,0.3) 2px, transparent 2px),
-        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.3) 2px, transparent 2px),
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25) 2px, transparent 2px),
-        radial-gradient(circle at 70% 70%, rgba(255,255,255,0.25) 2px, transparent 2px);
-    background-size: 150px 150px;
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.4) 1px, transparent 1px),
+        radial-gradient(circle at 20% 80%, rgba(255,255,255,0.3) 1px, transparent 1px),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.3) 1px, transparent 1px);
+    background-size: 100px 100px;
     animation: rotateMobius 300s linear infinite;
     pointer-events: none;
     z-index: -1;
-}
-
-/* Фоновая картинка внизу */
-body::after {
-    content: '';
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 900px;
-    background: url('image.png') bottom center no-repeat;
-    background-size: contain;
-    z-index: -1;
-    pointer-events: none;
-    opacity: 0.7;
+    will-change: transform;
 }
 
 @keyframes rotateMobius {
-    0% {
-        transform: rotate(0deg) translateX(0px) translateY(0px);
-    }
-    25% {
-        transform: rotate(90deg) translateX(50px) translateY(25px);
-    }
-    50% {
-        transform: rotate(180deg) translateX(0px) translateY(50px);
-    }
-    75% {
-        transform: rotate(270deg) translateX(-50px) translateY(25px);
-    }
-    100% {
-        transform: rotate(360deg) translateX(0px) translateY(0px);
-    }
+    0% { transform: rotate(0deg) translateX(0px) translateY(0px); }
+    100% { transform: rotate(360deg) translateX(0px) translateY(0px); }
 }
 
 /* Общие стили для всех блоков */
 .main-header,
-.content,
-.gallery-container,
-.hero-section,
-.horizontal-feedback,
+.certificates-container,
+.privacy-container,
 footer {
     width: 100%;
     max-width: 1600px;
-    margin: 0 auto 30px auto;
-    background: rgba(255, 255, 255, 0.1);
+    margin: 0 auto 20px auto;
+    background: var(--glass-bg);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 15px;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
     box-sizing: border-box;
 }
 
-/* Header */
+/* Header - мобильная оптимизация */
 .main-header {
-    padding: 25px 30px;
+    padding: 20px 15px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .header-content h1 {
-    color: #ffffff;
+    color: var(--text-white);
     font-family: 'Georgia', serif;
-    font-size: 2.2em;
+    font-size: 1.8em;
     margin: 0;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    line-height: 1.2;
 }
 
 .header-content p {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.1em;
+    color: var(--text-muted);
+    font-size: 1em;
     margin: 5px 0 0 0;
 }
 
 .header-nav {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .header-nav a {
-    padding: 10px 20px;
+    padding: 10px 15px;
     border: 1px solid rgba(255, 255, 255, 0.4);
     background: rgba(255, 255, 255, 0.15);
     border-radius: 8px;
-    color: white;
+    color: var(--text-white);
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-size: 14px;
+    white-space: nowrap;
 }
 
 .header-nav a:hover {
     background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.6);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transform: translateY(-1px);
 }
 
-/* Контент */
-.content {
-    padding: 40px;
-    font-size: 18px;
-    line-height: 1.6;
-}
-
-.content h2 {
-    font-size: 2.2em;
-    color: #ffffff;
-    margin-bottom: 25px;
-    font-family: 'Georgia', serif;
-}
-
-.content h3 {
-    font-size: 1.8em;
-    color: #ffffff;
-    margin: 30px 0 20px 0;
-}
-
-/* Галерея */
-.gallery-container {
-    padding: 40px;
+/* Контейнер сертификатов - мобильная версия */
+.certificates-container {
+    padding: 30px 15px;
     text-align: center;
 }
 
-.gallery-container h2 {
-    color: #ffffff;
-    font-family: 'Georgia', serif;
-    font-size: 2.5em;
-    margin-bottom: 40px;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-}
-
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
-    margin-top: 30px;
-}
-
-.project-item {
-    position: relative;
-    border-radius: 15px;
-    overflow: hidden;
-    aspect-ratio: 16/9;
-    box-shadow: 0 12px 35px rgba(0,0,0,0.5);
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 0.6s ease;
-}
-
-.project-item.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.project-item:hover {
-    transform: translateY(-10px) scale(1.03);
-}
-
-.project-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: all 0.4s ease;
-}
-
-.project-item:hover img {
-    filter: brightness(0.6) blur(1px);
-}
-
-.project-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    padding: 40px;
-    text-align: center;
-}
-
-.project-item:hover .project-overlay {
-    opacity: 1;
-}
-
-.project-overlay h3 {
-    color: #ffffff;
-    font-size: 2.2em;
-    margin-bottom: 20px;
-    font-family: 'Georgia', serif;
-    font-weight: bold;
-}
-
-.project-overlay p {
-    color: rgba(255, 255, 255, 0.95);
-    font-size: 1.4em;
-    line-height: 1.6;
-    max-width: 70%;
-}
-
-/* Герой секция с каруселью */
-.hero-section {
-    height: 600px;
-    padding: 0;
-    overflow: hidden;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-}
-
-.carousel-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-.carousel-slide {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-}
-
-.carousel-slide.active {
-    opacity: 1;
-}
-
-.carousel-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Кнопки карусели */
-.carousel-prev, .carousel-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    border: none;
-    color: white;
-    padding: 15px 20px;
-    cursor: pointer;
-    font-size: 24px;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    z-index: 10;
-}
-
-.carousel-prev:hover, .carousel-next:hover {
-    background: rgba(0, 0, 0, 0.8);
-    transform: translateY(-50%) scale(1.1);
-}
-
-.carousel-prev { left: 20px; }
-.carousel-next { right: 20px; }
-
-/* Индикаторы карусели */
-.carousel-indicators {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-    z-index: 10;
-}
-
-.indicator {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.indicator.active {
-    background: white;
-    transform: scale(1.3);
-}
-
-/* Форма поверх карусели */
-.feedback-overlay {
-    position: absolute;
-    top: 50%;
-    right: 50px;
-    transform: translateY(-50%);
-    width: 400px;
-    z-index: 5;
-}
-
-.feedback-form {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
-.feedback-form h3 {
-    color: white;
+.certificates-header h2 {
+    color: var(--text-white);
     font-family: 'Georgia', serif;
     font-size: 2em;
     margin-bottom: 10px;
-    text-align: center;
+    line-height: 1.2;
 }
 
-.feedback-form p {
-    color: rgba(255, 255, 255, 0.8);
-    text-align: center;
-    margin-bottom: 30px;
+.certificates-header p {
+    color: var(--text-muted);
     font-size: 1.1em;
+    margin-bottom: 30px;
 }
 
-.feedback-form input,
-.feedback-form textarea {
-    width: 100%;
-    padding: 14px 16px;
+/* Сетка сертификатов для мобильных */
+.certificates-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Карточка сертификата - мобильная оптимизация */
+.certificate-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.certificate-icon {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    color: #4a90e2;
+}
+
+.certificate-card h3 {
+    color: var(--text-white);
+    font-family: 'Georgia', serif;
+    font-size: 1.3em;
+    margin-bottom: 12px;
+    line-height: 1.3;
+}
+
+.certificate-card p {
+    color: var(--text-muted);
     margin-bottom: 20px;
+    line-height: 1.5;
+    font-size: 0.95em;
+}
+
+/* Контейнер PDF для мобильных */
+.pdf-preview-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    background: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.pdf-preview-container:hover {
+    height: 350px;
+    border-color: rgba(74, 144, 226, 0.6);
+}
+
+.pdf-preview {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: white;
+}
+
+/* Кнопки действий для мобильных */
+.certificate-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 14px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+}
+
+.btn-download {
+    background: var(--accent-gradient);
+    color: white;
+}
+
+.btn-view {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Формы для мобильных */
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 16px;
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.1);
-    color: #333;
-    font-size: 15px;
+    color: var(--text-white);
+    font-size: 16px; /* Важно для iOS */
     transition: all 0.3s ease;
     box-sizing: border-box;
 }
 
-.feedback-form input:focus,
-.feedback-form textarea:focus {
-    outline: none;
-    border-color: #4a90e2;
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 10px rgba(74, 144, 226, 0.3);
+/* Улучшаем тач-интерфейс */
+@media (hover: none) and (pointer: coarse) {
+    .header-nav a:hover {
+        transform: none;
+        background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .certificate-card:hover {
+        transform: none;
+    }
+    
+    .pdf-preview-container:hover {
+        height: 300px;
+    }
 }
 
-.feedback-form button {
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, #4a90e2, #2a5298);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 10px;
+/* Планшеты */
+@media (min-width: 768px) {
+    body {
+        padding: 20px;
+    }
+    
+    .main-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+        padding: 25px 30px;
+    }
+    
+    .certificates-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    
+    .certificate-actions {
+        flex-direction: row;
+    }
+    
+    .pdf-preview-container {
+        height: 350px;
+    }
+    
+    .pdf-preview-container:hover {
+        height: 400px;
+    }
 }
 
-.feedback-form button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+/* Десктоп */
+@media (min-width: 1024px) {
+    .certificates-container {
+        padding: 50px 30px;
+    }
+    
+    .certificates-header h2 {
+        font-size: 2.5em;
+    }
+    
+    .pdf-preview-container {
+        height: 400px;
+    }
+    
+    .pdf-preview-container:hover {
+        height: 450px;
+    }
 }
 
-/* Горизонтальная форма в конце */
-.horizontal-feedback {
-    padding: 20px;
-    margin: 20px auto;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+/* Очень маленькие экраны */
+@media (max-width: 360px) {
+    body {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .header-nav {
+        gap: 5px;
+    }
+    
+    .header-nav a {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+    
+    .certificate-card {
+        padding: 15px 10px;
+    }
+    
+    .pdf-preview-container {
+        height: 250px;
+    }
 }
 
-.feedback-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 40px;
-}
-
-.feedback-text {
-    flex: 1;
-}
-
-.feedback-text h3 {
-    color: white;
-    font-family: 'Georgia', serif;
-    font-size: 2em;
-    margin-bottom: 10px;
-}
-
-.feedback-text p {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 1.1em;
-}
-
-.feedback-form-horizontal {
-    flex: 2;
-}
-
-.form-row {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-.form-row input {
-    flex: 1;
-    padding: 14px 16px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    font-size: 15px;
-    transition: all 0.3s ease;
-}
-
-.form-row input:focus {
-    outline: none;
-    border-color: #4a90e2;
-    background: rgba(255, 255, 255, 0.15);
-}
-
-.form-row input::placeholder {
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.form-row button {
-    padding: 14px 30px;
-    background: linear-gradient(135deg, #4a90e2, #2a5298);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-
-.form-row button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
-}
-
-/* Футер */
+/* Футер для мобильных */
 footer {
-    padding: 30px;
+    padding: 25px 15px;
     text-align: center;
     margin-top: auto;
 }
 
 .footer-links {
     display: flex;
-    justify-content: center;
-    gap: 30px;
     flex-wrap: wrap;
-    margin-bottom: 20px;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
 }
 
 .footer-links a {
-    color: white;
+    color: var(--text-white);
     text-decoration: none;
     transition: color 0.3s;
     font-size: 14px;
@@ -505,295 +371,18 @@ footer {
 
 .footer-links a:hover {
     color: #a8d8ff;
-    text-decoration: underline;
 }
 
-/* Адаптивность */
-@media (max-width: 968px) {
-    .projects-grid {
-        grid-template-columns: 1fr;
+/* Отключаем анимации для тех, кто их не любит */
+@media (prefers-reduced-motion: reduce) {
+    body::before {
+        animation: none;
     }
     
-    .feedback-content {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .form-row {
-        flex-direction: column;
-    }
-    
-    .hero-section {
-        height: 400px;
-    }
-    
-    .feedback-overlay {
-        position: relative;
-        width: 100%;
-        right: 0;
-        transform: none;
-        margin-top: 20px;
-    }
-    
-    .carousel-prev, .carousel-next {
-        padding: 10px 15px;
-        font-size: 18px;
+    .certificate-card,
+    .btn,
+    .header-nav a,
+    .pdf-preview-container {
+        transition: none;
     }
 }
-/* Карточка сертификата */
-        .certificate-card {
-            position: relative;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
-            cursor: pointer;
-            overflow: hidden;
-        }
-
-        .certificate-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        }
-
-        .certificate-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.6s;
-        }
-
-        .certificate-card:hover::before {
-            left: 100%;
-        }
-
-        .certificate-icon {
-            font-size: 3em;
-            margin-bottom: 20px;
-            color: #4a90e2;
-        }
-
-        .certificate-card h3 {
-            color: var(--text-white);
-            font-family: 'Georgia', serif;
-            font-size: 1.5em;
-            margin-bottom: 15px;
-        }
-
-        .certificate-card p {
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        /* Контейнер предпросмотра PDF */
-        .pdf-preview-container {
-            position: relative;
-            width: 100%;
-            height: 500px;
-            border-radius: 10px;
-            overflow: hidden;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.4s ease;
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .certificate-card:hover .pdf-preview-container {
-            height: 600px;
-            border-color: rgba(74, 144, 226, 0.5);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-        }
-
-        .pdf-preview {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: white;
-        }
-
-        /* Слой затемнения и увеличения */
-        .pdf-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-
-       /* ИСПРАВЛЕНИЕ: Показываем оверлей только при наведении на PDF */
-        .pdf-preview-container:hover .pdf-overlay {
-            opacity: 1;
-        }
-
-        .zoom-indicator {
-            color: white;
-            font-size: 1.1em;
-            text-align: center;
-            padding: 15px 20px;
-            background: rgba(74, 144, 226, 0.9);
-            border-radius: 8px;
-            transform: translateY(10px);
-            transition: transform 0.3s ease;
-            pointer-events: none;
-        }
-
-        .pdf-preview-container:hover .zoom-indicator {
-            transform: translateY(0);
-        }
-
-        /* Кнопки действий */
-        .certificate-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-download {
-            background: var(--accent-gradient);
-            color: white;
-        }
-
-        .btn-download:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
-        }
-
-        .btn-view {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-view:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        /* Футер */
-        footer {
-            padding: 30px;
-            text-align: center;
-            margin-top: auto;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .footer-links a {
-            color: var(--text-white);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: #a8d8ff;
-        }
-
-        /* Адаптивность */
-        @media (max-width: 968px) {
-            .certificates-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            
-            .pdf-preview-container {
-                height: 400px;
-            }
-            
-            .certificate-card:hover .pdf-preview-container {
-                height: 500px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            
-            .main-header,
-            .certificates-container,
-            footer {
-                padding: 20px;
-            }
-            
-            .certificates-header h2 {
-                font-size: 2em;
-            }
-            
-            .pdf-preview-container {
-                height: 350px;
-            }
-            
-            .certificate-card:hover .pdf-preview-container {
-                height: 450px;
-            }
-            
-            .certificate-actions {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .certificates-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .pdf-preview-container {
-                height: 300px;
-            }
-            
-            .certificate-card:hover .pdf-preview-container {
-                height: 400px;
-            }
-        }
-
-        /* Поддержка prefers-reduced-motion */
-        @media (prefers-reduced-motion: reduce) {
-            body::before {
-                animation: none;
-            }
-            
-            .certificate-card,
-            .btn {
-                transition: none;
-            }
-        }
