@@ -1,0 +1,88 @@
+<?php
+header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, DELETE');
+header('Access-Control-Allow-Headers: Content-Type');
+
+// Настройки
+$newsFile = '../news.json';
+$uploadDir = '../uploads/';
+
+// Создаем папки если нет
+if (!file_exists($uploadDir)) {
+    mkdir($uploadDir, 0777, true);
+}
+
+// GET - получить все новости
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if (file_exists($newsFile)) {
+        $newsData = json_decode(file_get_contents($newsFile), true);
+        echo json_encode(['success' => true, 'news' => $newsData['news']]);
+    } else {
+        echo json_encode(['success' => true, 'news' => []]);
+    }
+    exit;
+}
+
+// POST - добавить новость
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $input = json_decode(file_get_contents('php://input'), true);
+    
+    // Загрузка изображения
+    $imagePath = '';
+    if (isset($_FILES['image'])) {
+        $imageFile = $_FILES['image'];
+        $imageName = 'news_' . time() . '_' . uniqid() . '.' . pathinfo($imageFile['name'], PATHINFO_EXTENSION);
+        $imagePath = 'uploads/' . $imageName;
+        
+        if (move_uploaded_file($imageFile['tmp_name'], '../' . $imagePath)) {
+            // Успешно загружено
+        }
+    } elseif (!empty($input['image_url'])) {
+        $imagePath = $input['image_url'];
+    }
+
+    // Читаем текущие новости
+    $newsData = file_exists($newsFile) ? json_decode(file_get_contents($newsFile), true) : ['news' => []];
+    
+    // Добавляем новую новость
+    $newNews = [
+        'id' => time(),
+        'date' => $input['date'] ?? date('Y-m-d'),
+        'title' => $input['title'],
+        'content' => $input['content'],
+        'image' => $imagePath,
+        'tags' => $input['tags'] ?? []
+    ];
+    
+    array_unshift($newsData['news'], $newNews);
+    
+    // Сохраняем
+    if (file_put_contents($newsFile, json_encode($newsData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE))) {
+        echo json_encode(['success' => true, 'message' => 'Новость добавлена']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Ошибка сохранения']);
+    }
+    exit;
+}
+
+// DELETE - удалить новость
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $input = json_decode(file_get_contents('php://input'), true);
+    $idToDelete = $input['id'];
+    
+    $newsData = json_decode(file_get_contents($newsFile), true);
+    $newsData['news'] = array_filter($newsData['news'], function($news) use ($idToDelete) {
+        return $news['id'] != $idToDelete;
+    });
+    
+    if (file_put_contents($newsFile, json_encode($newsData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE))) {
+        echo json_encode(['success' => true, 'message' => 'Новость удалена']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Ошибка удаления']);
+    }
+    exit;
+}
+
+echo json_encode(['success' => false, 'message' => 'Неизвестный метод']);
+?>

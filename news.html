@@ -3,446 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Новости - Nukuselectroapparat</title>
+    <title>Новости</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Стили для страницы новостей */
-        .news-container {
-            padding: 50px 30px;
-            flex: 1;
-        }
-
-        .news-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .news-header h2 {
-            color: var(--text-white);
-            font-family: 'Georgia', serif;
-            font-size: 2.5em;
-            margin-bottom: 15px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-        }
-
-        .news-header p {
-            color: var(--text-muted);
-            font-size: 1.2em;
-        }
-
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .news-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 30px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .news-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .news-date {
-            color: #4a90e2;
-            font-size: 0.9em;
-            font-weight: 600;
-            margin-bottom: 15px;
-            display: inline-block;
-            background: rgba(74, 144, 226, 0.1);
-            padding: 5px 12px;
-            border-radius: 20px;
-        }
-
-        .news-card h3 {
-            color: var(--text-white);
-            font-family: 'Georgia', serif;
-            font-size: 1.4em;
-            margin-bottom: 15px;
-            line-height: 1.3;
-        }
-
-        .news-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin: 15px 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .news-card:hover .news-image {
-            transform: scale(1.02);
-        }
-
-        .news-content {
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .news-content p {
-            margin-bottom: 15px;
-        }
-
-        .news-content ul, .news-content ol {
-            margin: 15px 0;
-            padding-left: 20px;
-        }
-
-        .news-content li {
-            margin-bottom: 8px;
-        }
-
-        .news-content strong {
-            color: var(--text-white);
-            font-weight: 600;
-        }
-
-        .news-content em {
-            color: var(--text-muted);
-            font-style: italic;
-        }
-
-        .news-tags {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        .tag {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-muted);
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.8em;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .tag:hover {
-            background: rgba(74, 144, 226, 0.2);
-            color: #4a90e2;
-        }
-
-        .loading, .no-news, .error {
-            text-align: center;
-            color: var(--text-muted);
-            grid-column: 1 / -1;
-            padding: 40px;
-            font-size: 1.1em;
-        }
-
-        .error {
-            color: #ff6b6b;
-            background: rgba(255, 107, 107, 0.1);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 107, 107, 0.3);
-        }
-
-        .admin-link {
-            text-align: center;
-            margin-top: 30px;
-            padding: 20px;
-        }
-
-        .admin-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #4a90e2, #2a5298);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .admin-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
-        }
-
-        /* Адаптивность для новостей */
-        @media (max-width: 968px) {
-            .news-grid {
-                grid-template-columns: 1fr;
-                gap: 25px;
-            }
-            
-            .news-container {
-                padding: 30px 20px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .news-container {
-                padding: 30px 15px;
-            }
-            
-            .news-grid {
-                gap: 20px;
-            }
-            
-            .news-card {
-                padding: 20px;
-            }
-            
-            .news-header h2 {
-                font-size: 2em;
-            }
-            
-            .news-image {
-                height: 180px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .news-container {
-                padding: 20px 10px;
-            }
-            
-            .news-card {
-                padding: 15px;
-            }
-            
-            .news-header h2 {
-                font-size: 1.8em;
-            }
-            
-            .news-image {
-                height: 150px;
-            }
-            
-            .news-header p {
-                font-size: 1em;
-            }
-        }
-
-        /* Анимация появления новостей */
-        .news-card {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.6s ease forwards;
-        }
-
-        .news-card:nth-child(1) { animation-delay: 0.1s; }
-        .news-card:nth-child(2) { animation-delay: 0.2s; }
-        .news-card:nth-child(3) { animation-delay: 0.3s; }
-        .news-card:nth-child(4) { animation-delay: 0.4s; }
-        .news-card:nth-child(5) { animation-delay: 0.5s; }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-content">
-            <h1>Nukuselectroapparat</h1>
-            <p>ООО «Nukuselectroapparat»</p>
-        </div>
-        <nav class="header-nav">
-            <a href="index.html">Главная</a>
-            <a href="news.html">Новости</a>
-            <a href="certificates.html">Сертификаты</a>
-            <a href="privacy.html">Контакты</a>
-        </nav>
-    </header>
+    <!-- Твой хедер -->
+    <header class="main-header">...</header>
 
-    <!-- Основной контент -->
     <main class="news-container">
-        <div class="news-header">
-            <h2>Последние новости</h2>
-            <p>Следите за нашими обновлениями и событиями</p>
-        </div>
-
-        <div id="news-container" class="news-grid">
-            <!-- Новости загрузятся сюда автоматически -->
-            <div class="loading">Загрузка новостей...</div>
-        </div>
-
-        <!-- Ссылка на админ-панель -->
-        <div class="admin-link">
-            <a href="admin-news.html" class="admin-btn">⚙️ Панель управления новостями</a>
+        <h2>Новости</h2>
+        <div id="newsContainer">Загрузка новостей...</div>
+        
+        <!-- Ссылка на админку -->
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="admin-news.html" class="btn">⚙️ Управление новостями</a>
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-links">
-            <a href="index.html">Главная</a>
-            <a href="news.html">Новости</a>
-            <a href="certificates.html">Сертификаты</a>
-            <a href="privacy.html">Контакты</a>
-            <a href="privacy.html">Политика конфиденциальности</a>
-        </div>
-        <p>© 2024 ООО «Nukuselectroapparat». Все права защищены.</p>
-    </footer>
+    <!-- Твой футер -->
+    <footer>...</footer>
 
     <script>
-        // Загрузка новостей при загрузке страницы
-        document.addEventListener('DOMContentLoaded', loadNews);
-
-        // Основная функция загрузки новостей
+        // Загрузка новостей
         async function loadNews() {
             try {
-                console.log('🔄 Начинаем загрузку новостей...');
-                
-                // Сначала пробуем загрузить из LocalStorage (из админ-панели)
-                const localNews = JSON.parse(localStorage.getItem('news') || '[]');
-                
-                if (localNews.length > 0) {
-                    console.log('✅ Новости найдены в LocalStorage:', localNews.length);
-                    showNews(localNews);
-                } else {
-                    // Если в LocalStorage нет, грузим из JSON файла
-                    console.log('🔍 Новостей в LocalStorage нет, загружаем из JSON...');
-                    await loadFromJsonFile();
-                }
-            } catch (error) {
-                console.error('❌ Ошибка загрузки из LocalStorage:', error);
-                await loadFromJsonFile();
-            }
-        }
-
-        // Загрузка из JSON файла (резервный вариант)
-        async function loadFromJsonFile() {
-            try {
-                const response = await fetch('news.json');
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
+                const response = await fetch('api/news.php');
                 const data = await response.json();
-                console.log('✅ Данные загружены из JSON:', data.news.length);
                 
-                if (data.news && data.news.length > 0) {
-                    showNews(data.news);
-                } else {
-                    showNoNews();
+                if (data.success) {
+                    displayNews(data.news);
                 }
             } catch (error) {
-                console.error('❌ Ошибка загрузки из JSON:', error);
-                showError('Новости временно недоступны. Пожалуйста, попробуйте позже.');
+                document.getElementById('newsContainer').innerHTML = '<p>Ошибка загрузки новостей</p>';
             }
         }
 
-        // Отображение новостей на странице
-        function showNews(newsArray) {
-            const container = document.getElementById('news-container');
+        function displayNews(news) {
+            const container = document.getElementById('newsContainer');
             
-            if (!newsArray || newsArray.length === 0) {
-                showNoNews();
+            if (!news || news.length === 0) {
+                container.innerHTML = '<p>Новостей пока нет</p>';
                 return;
             }
 
-            // Сортируем новости по дате (новые сначала)
-            const sortedNews = newsArray.sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            container.innerHTML = sortedNews.map(news => `
+            container.innerHTML = news.map(item => `
                 <article class="news-card">
-                    <div class="news-date">${formatDate(news.date)}</div>
-                    <h3>${escapeHtml(news.title)}</h3>
-                    ${news.image ? `
-                    <img src="${news.image}" alt="${escapeHtml(news.title)}" class="news-image" loading="lazy">
-                    ` : ''}
-                    <div class="news-content">
-                        ${news.content}
-                    </div>
-                    ${news.tags && news.tags.length > 0 ? `
+                    <div class="news-date">${item.date}</div>
+                    <h3>${item.title}</h3>
+                    ${item.image ? `<img src="${item.image}" alt="${item.title}" class="news-image">` : ''}
+                    <div class="news-content">${item.content}</div>
+                    ${item.tags.length > 0 ? `
                     <div class="news-tags">
-                        ${news.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}
+                        ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
                     </div>
                     ` : ''}
                 </article>
             `).join('');
         }
 
-        // Форматирование даты
-        function formatDate(dateString) {
-            try {
-                const date = new Date(dateString);
-                if (isNaN(date.getTime())) {
-                    return 'Дата не указана';
-                }
-                
-                return date.toLocaleDateString('ru-RU', {
-                    day: 'numeric',
-                    month: 'long', 
-                    year: 'numeric'
-                });
-            } catch (error) {
-                console.error('Ошибка форматирования даты:', error);
-                return 'Дата не указана';
-            }
-        }
-
-        // Экранирование HTML для безопасности
-        function escapeHtml(unsafe) {
-            if (!unsafe) return '';
-            return unsafe
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-
-        // Показ сообщения "нет новостей"
-        function showNoNews() {
-            const container = document.getElementById('news-container');
-            container.innerHTML = `
-                <div class="no-news">
-                    <h3>📰 Новостей пока нет</h3>
-                    <p>Скоро здесь появятся свежие новости нашей компании</p>
-                    <p><a href="admin-news.html" style="color: #4a90e2; text-decoration: none;">Добавить первую новость →</a></p>
-                </div>
-            `;
-        }
-
-        // Показ сообщения об ошибке
-        function showError(message) {
-            const container = document.getElementById('news-container');
-            container.innerHTML = `
-                <div class="error">
-                    <h3>⚠️ Ошибка загрузки</h3>
-                    <p>${message}</p>
-                    <button onclick="location.reload()" style="
-                        background: #4a90e2;
-                        color: white;
-                        border: none;
-                        padding: 10px 20px;
-                        border-radius: 5px;
-                        cursor: pointer;
-                        margin-top: 10px;
-                    ">Обновить страницу</button>
-                </div>
-            `;
-        }
-
-        // Автоматическое обновление каждые 30 секунд (опционально)
-        // setInterval(loadNews, 30000);
+        // Загружаем при старте
+        loadNews();
     </script>
 </body>
 </html>
