@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
     
-    $to = "gogol-1901@mail.ru";
+    $to = "cc@nkea.uz";
     $subject = "Новое сообщение с сайта от $name";
     $body = "Имя: $name\nEmail: $email\n";
     

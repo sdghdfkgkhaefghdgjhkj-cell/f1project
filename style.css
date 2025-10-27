@@ -1,6 +1,6 @@
 /* Основные стили */
 body {
-    background: linear-gradient(to top right, #000000, #001d50);
+    background: linear-gradient(to top right, #000b1d, #00348d);
     position: relative;
     min-height: 100vh;
     font-family: Arial, sans-serif;
@@ -146,6 +146,7 @@ footer {
     color: #ffffff;
     margin-bottom: 25px;
     font-family: 'Georgia', serif;
+    text-align: center;
 }
 
 .content h3 {
@@ -833,6 +834,7 @@ footer {
     font-family: 'Georgia', serif;
     font-size: 2.5em;
     margin-bottom: 15px;
+    
 }
 
 .news-header p {
